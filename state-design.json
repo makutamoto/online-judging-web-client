@@ -1,0 +1,29 @@
+{
+    "task": {
+        "id": "bc01"
+    },
+    "code": {
+        "isSubmitting": false,
+        "lang": "g++",
+        "code": "#include..."
+    },
+    "results": {
+        "list": [
+            {
+                "id": "adadwddadwadadwd",
+                "contest": "BC01",
+                "task": "A aaaa",
+                "isFetching": false,
+                "data": {
+                    "whole_result": 0,
+                    "result": 0,
+                    "time": 332,
+                    "memory": 256,
+                    "current_case": 1,
+                    "whole_case": 2,
+                    "description": ""
+                }
+            }
+        ]
+    }
+}
