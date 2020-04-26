@@ -83,10 +83,7 @@ export const fetchResult = (id: string) => (dispatch: DispatchType, getState: an
     new Promise((resolve, reject) => {
         let socket: WebSocket;
         dispatch(requestResult(id));
-        socket = new WebSocket('ws://localhost:8080/submissions');
-        socket.addEventListener('open', () => {
-            socket.send(JSON.stringify({ id }));
-        });
+        socket = new WebSocket(`ws://localhost:8080/submissions/${id}`);
         socket.addEventListener('message', (e) => {
             dispatch(updateResult(id, JSON.parse(e.data)));
         });
@@ -104,7 +101,7 @@ export interface Submission {
 }
 export const submitResult = (submission: Submission) => (dispatch: DispatchType) => {
     dispatch(requestCodeSubmission());
-    return axios.post('http://localhost:8080/submit', submission)
+    return axios.post(`http://localhost:8080/contests/bc1/tasks/1`, submission)
         .then((response) => {
             dispatch(receiveCodeSubmission());
             dispatch(fetchResult(response.data.id) as any);
