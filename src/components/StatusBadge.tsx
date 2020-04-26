@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, CircularProgress } from '@material-ui/core';
+import { Avatar, CircularProgress, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
@@ -35,6 +35,7 @@ interface StatusBadgeProps {
 export default function(props: StatusBadgeProps) {
     const classes = useStyles();
     const names = ['AC', 'WA', 'RE', 'TLE', 'CE', 'IE'];
+    const longNames = ['正解', '不正解', '実行時エラー', '時間切れ', 'コンパイルエラー', '内部エラー'];
     let name = names[props.status as any];
     let background: string | null;
     let progress: string | null;
@@ -56,7 +57,9 @@ export default function(props: StatusBadgeProps) {
     }
     return (
         <div className={classes.root}>
-            <Avatar className={clsx(classes.avatar, background)}>{name}</Avatar>
+            <Tooltip title={longNames[props.status as any] || 'ジャッジ待ち'} placement="top">
+                <Avatar className={clsx(classes.avatar, background)}>{name}</Avatar>
+            </Tooltip>
             {props.progress && <CircularProgress className={clsx(classes.progress, progress)} size={48} />}
         </div>
     );
