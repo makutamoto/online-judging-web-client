@@ -12,7 +12,7 @@ export interface LangSelectorProps {
 }
 export default function(props: LangSelectorProps) {
     return (
-        <TextField label="Language" value={props.lang} onChange={(e) => props.onLangChange(e.target.value)} select>
+        <TextField label="言語" value={props.lang} onChange={(e) => props.onLangChange(e.target.value)} select>
             {props.langs.map((lang) => (
                 <MenuItem key={lang.id} value={lang.id}>{lang.name}</MenuItem>
             ))}
