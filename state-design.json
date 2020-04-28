@@ -20,8 +20,13 @@
                     "time": 332,
                     "memory": 256,
                     "current_case": 1,
-                    "whole_case": 2,
-                    "description": ""
+                    "whole_case": 2
+                },
+                "details": {
+                    "max_time": 0,
+                    "max_memory": 0,
+                    "compile_error": "AAAAAAAAA",
+                    "details": []
                 }
             }
         ]

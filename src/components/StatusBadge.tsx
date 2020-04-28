@@ -3,6 +3,8 @@ import { Avatar, CircularProgress, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
+import { StatusAC } from '../actions';
+
 const useStyles = makeStyles({
     root: {
         position: 'relative',
@@ -45,7 +47,7 @@ export default function(props: StatusBadgeProps) {
             background = null;
             progress = classes.progressNormal;
             break;
-        case 0:
+        case StatusAC:
             if(props.progress) background = null;
             else background = classes.ac;
             progress = classes.progressNormal;

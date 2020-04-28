@@ -10,7 +10,7 @@ export default function() {
         <Container maxWidth="md" component={Paper}>
             <AppBar>
                 <Toolbar>
-                    <Typography variant="h6">***Coder</Typography>
+                    <Typography variant="h6">MyCoder</Typography>
                 </Toolbar>
             </AppBar>
             <Toolbar />

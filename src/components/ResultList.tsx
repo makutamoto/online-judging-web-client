@@ -2,7 +2,8 @@ import React from 'react';
 import { List } from '@material-ui/core';
 
 import { Result } from '../actions';
-import ResultListItem, { ResultRusage, ResultCurrentCase } from './ResultListItem';
+import { ResultRusage, ResultCurrentCase } from './ResultListItem';
+import ResultListItemDetail from './ResultListItemDetail';
 
 export interface ResultListProps {
     list: Result[],
@@ -22,13 +23,20 @@ export default function(props: ResultListProps) {
                     whole: result.data.whole_case
                 };
             } else {
-                info = {
-                    time: result.data.time,
-                    memory: result.data.memory,
-                };
+                if(result.details === null) {
+                    info = {
+                        time: result.data.time,
+                        memory: result.data.memory,
+                    };
+                } else {
+                    info = {
+                        time: result.details.max_time,
+                        memory: result.details.max_memory,
+                    };
+                }
             }
         }
-        return <ResultListItem key={result.id} contest={result.contest} task={result.task} info={info} status={status} />;
+        return <ResultListItemDetail key={result.id} title={{contest: result.contest, task: result.task}} info={info} status={status} details={result.details} />;
     });
     return (
         <List>

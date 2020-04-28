@@ -2,6 +2,12 @@ import axios from 'axios';
 
 import { DispatchType } from '../';
 
+export const StatusAC = 0;
+export const StatusWA = 1;
+export const StatusRE = 2;
+export const StatusTLE = 3;
+export const StatusCE = 4;
+
 export interface RequestCodeSubmissionAction {
     type: string,
 }
@@ -41,7 +47,6 @@ export interface ResultData {
     memory: number,
     current_case: number,
     whole_case: number,
-    description: string,
 }
 export interface Result {
     isFetching: boolean,
@@ -49,6 +54,19 @@ export interface Result {
     contest: string,
     task: string,
     data: ResultData | null,
+    details: Detail | null,
+}
+export interface DetailRow {
+    title: string,
+	result: number,
+	time: number,
+	memory: number,
+}
+export interface Detail {
+    max_time: number,
+	max_memory: number,
+	compile_error: string,
+	details: DetailRow[] | null,
 }
 
 export interface RequestResultAction {
@@ -79,18 +97,33 @@ export const receiveResult = (id: string) => ({
     id,
 });
 
+export interface ReceiveResultDetailsAction {
+    type: string,
+    id: string,
+    details: Detail,
+}
+export const receiveResultDetails = (id: string, details: Detail) => ({
+    type: 'RECEIVE_RESULT_DETAILS',
+    id, details,
+});
+
 export const fetchResult = (id: string) => (dispatch: DispatchType, getState: any) => (
     new Promise((resolve, reject) => {
         let socket: WebSocket;
         dispatch(requestResult(id));
-        socket = new WebSocket(`ws://localhost:8080/submissions/${id}`);
+        socket = new WebSocket(`ws://localhost:8080/submissions/realtime/${id}`);
         socket.addEventListener('message', (e) => {
             dispatch(updateResult(id, JSON.parse(e.data)));
         });
         socket.addEventListener('error', reject);
         socket.addEventListener('close', () => {
-            dispatch(receiveResult(id));
-            resolve();
+            axios.get(`http://localhost:8080/submissions/details/${id}`)
+                .then((response) => {
+                    dispatch(receiveResultDetails(id, response.data));
+                    dispatch(receiveResult(id));
+                    resolve();
+                })
+                .catch(reject);
         });
     })
 );
