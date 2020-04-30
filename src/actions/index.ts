@@ -40,6 +40,37 @@ export const setCode = (code: string) => ({
     code,
 });
 
+export interface TaskData {
+    title: string,
+    problem: string,
+    time_limit: number,
+}
+export interface RequestTaskDataAction {
+    type: string,
+}
+export const requestTaskData = () => ({
+    type: 'REQUEST_TASK_DATA',
+});
+export interface ReceiveTaskDataAction {
+    type: string,
+    data: TaskData,
+}
+export const receiveTaskData = (data: TaskData) => ({
+    type: 'RECEIVE_TASK_DATA',
+    data,
+});
+export const fetchTaskData = (contest: string, task: number) => (dispatch: DispatchType) => {
+    dispatch(requestTaskData());
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/contests/${contest}/tasks/${task}/json`)
+        .then((response) => {
+            dispatch(receiveTaskData(response.data));
+            resolve();
+        })
+        .catch(reject);
+    });
+};
+
 export interface ResultData {
     whole_result: number,
     result: number,

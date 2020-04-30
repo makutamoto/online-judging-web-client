@@ -2,3 +2,7 @@
     height: auto;
     border: solid 1px lightgray;
 }
+
+.CodeMirror-scroll {
+    min-height: 300px;
+}

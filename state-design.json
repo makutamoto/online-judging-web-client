@@ -1,6 +1,11 @@
 {
     "task": {
-        "id": "bc01"
+        "id": "bc01",
+        "data": {
+            "title": "AAAAA",
+            "problem": "AAAA",
+            "time_limit": 2000
+        }
     },
     "code": {
         "isSubmitting": false,

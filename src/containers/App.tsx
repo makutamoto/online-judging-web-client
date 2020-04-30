@@ -1,45 +1,29 @@
 import React from 'react';
-import { AppBar, Container, Divider, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Breadcrumbs, Container, Divider, Link, Paper, Toolbar, Typography } from '@material-ui/core';
 
-import Section from '../components/Section';
+import Path from '../components/Path';
+import ProblemViewContainer from './ProblemViewContainer';
 import SubmissionFormContainer from './SubmissionFormContainer';
 import ResultListContainer from './ResultListContainer';
 
 export default function() {
     return (
-        <Container maxWidth="md" component={Paper}>
+        <React.Fragment>
             <AppBar>
                 <Toolbar>
                     <Typography variant="h6">MyCoder</Typography>
                 </Toolbar>
             </AppBar>
             <Toolbar />
-            <Grid container direction="column" spacing={2}>
-                <Grid item>
-                    <Section title="問題分">
-                        AAA
-                    </Section>
-                </Grid>
-                <Grid item>
-                    <Section title="制約">
-                        AAA
-                    </Section>
-                </Grid>
-                <Grid item>
-                    <Divider />
-                    <Section title="入力">
-                        AAA
-                    </Section>
-                    <Section title="出力">
-                        AAA
-                    </Section>
-                </Grid>
-            </Grid>
-            <Divider />
-            <Container maxWidth="sm">
-                <SubmissionFormContainer />
-                <ResultListContainer />
+            <Container maxWidth="md" component={Paper}>
+                <Path />
+                <ProblemViewContainer />
+                <Divider />
+                <Container maxWidth="sm">
+                    <SubmissionFormContainer />
+                    <ResultListContainer />
+                </Container>
             </Container>
-        </Container>
+        </React.Fragment>
     );
 }
