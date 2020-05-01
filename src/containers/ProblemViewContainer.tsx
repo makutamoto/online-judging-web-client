@@ -8,11 +8,13 @@ import ProblemView from '../components/ProblemView';
 
 interface ProblemViewContainerProps {
     info: TaskData | null,
-    onMount: () => void,
+    onMount: (contest: string, task: number) => void,
+    contest: string,
+    task: number,
 }
 class ProblemViewContainer extends React.Component<ProblemViewContainerProps> {
     componentDidMount() {
-        this.props.onMount();
+        this.props.onMount(this.props.contest, this.props.task);
     }
     render() {
         let title = this.props.info && this.props.info.title;
@@ -31,7 +33,7 @@ const mapStateToProps = (state: StateType) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onMount: () => dispatch(fetchTaskData("bc1", 1) as any),
+    onMount: (contest: string, task: number) => dispatch(fetchTaskData(contest, task) as any),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProblemViewContainer);

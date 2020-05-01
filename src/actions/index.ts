@@ -8,6 +8,38 @@ export const StatusRE = 2;
 export const StatusTLE = 3;
 export const StatusCE = 4;
 
+export interface TaskListRow {
+    title: string,
+    time_limit: number,
+}
+export interface RequestTaskListAction {
+    type: string,
+}
+export const requestTaskList = () => ({
+    type: "REQUEST_TASK_LIST",
+});
+
+export interface ReceiveTaskListAction {
+    type: string,
+    data: TaskListRow[],
+}
+export const receiveTaskList = (data: TaskListRow[]) => ({
+    type: 'RECEIVE_TASK_LIST',
+    data,
+});
+
+export const fetchTaskList = (contest: string) => (dispatch: DispatchType) => {
+    dispatch(requestTaskData());
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/contests/${contest}/tasks/json`)
+            .then((response) => {
+                dispatch(receiveTaskList(response.data));
+                resolve();
+            })
+            .catch(reject);
+    });
+};
+
 export interface RequestCodeSubmissionAction {
     type: string,
 }
@@ -163,9 +195,9 @@ export interface Submission {
     lang: string,
     code: string,
 }
-export const submitResult = (submission: Submission) => (dispatch: DispatchType) => {
+export const submitResult = (contest: string, task: number, submission: Submission) => (dispatch: DispatchType) => {
     dispatch(requestCodeSubmission());
-    return axios.post(`http://localhost:8080/contests/bc1/tasks/1`, submission)
+    return axios.post(`http://localhost:8080/contests/${contest}/tasks/${task}`, submission)
         .then((response) => {
             dispatch(receiveCodeSubmission());
             dispatch(fetchResult(response.data.id) as any);

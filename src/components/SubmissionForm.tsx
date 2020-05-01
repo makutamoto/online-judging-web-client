@@ -17,8 +17,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 export interface SubmissionFormProps extends EditorProps, LangSelectorProps {
+    contest: string,
+    task: number,
     isSubmitting: boolean,
-    onSubmit: (val: Submission) => void,
+    onSubmit: (contest: string, task: number, val: Submission) => void,
 }
 export default function(props: SubmissionFormProps) {
     const classes = useStyles();
@@ -32,7 +34,7 @@ export default function(props: SubmissionFormProps) {
                     <Editor {...props} />
                 </Grid>
                 <Grid item>
-                    <SubmitButton isSubmitting={props.isSubmitting} onClick={() => props.onSubmit({ lang: props.lang, code: props.code })} />
+                    <SubmitButton isSubmitting={props.isSubmitting} onClick={() => props.onSubmit(props.contest, props.task, { lang: props.lang, code: props.code })} />
                 </Grid>
             </Grid>
         </Box>

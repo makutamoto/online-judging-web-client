@@ -1,10 +1,10 @@
 import React from 'react';
-import { AppBar, Breadcrumbs, Container, Divider, Link, Paper, Toolbar, Typography } from '@material-ui/core';
+import { Switch, Route } from 'react-router-dom';
+import { AppBar, Container, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import Path from '../components/Path';
-import ProblemViewContainer from './ProblemViewContainer';
-import SubmissionFormContainer from './SubmissionFormContainer';
-import ResultListContainer from './ResultListContainer';
+import TaskListContainer from './TaskListContainer';
+import Task from './Task';
 
 export default function() {
     return (
@@ -17,12 +17,10 @@ export default function() {
             <Toolbar />
             <Container maxWidth="md" component={Paper}>
                 <Path />
-                <ProblemViewContainer />
-                <Divider />
-                <Container maxWidth="sm">
-                    <SubmissionFormContainer />
-                    <ResultListContainer />
-                </Container>
+                <Switch>
+                    <Route path="/contests/:contest/tasks/:task(\d+)" component={Task} />
+                    <Route path="/contests/:contest/tasks/" component={TaskListContainer} />
+                </Switch>
             </Container>
         </React.Fragment>
     );

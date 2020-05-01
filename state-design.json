@@ -7,6 +7,15 @@
             "time_limit": 2000
         }
     },
+    "tasks": {
+        "list": [
+            {
+                "task": 1,
+                "title": "AAAA",
+                "time_limit": 2000
+            }
+        ]
+    },
     "code": {
         "isSubmitting": false,
         "lang": "g++",

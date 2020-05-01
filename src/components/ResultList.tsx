@@ -33,7 +33,7 @@ export interface ResultListProps {
 export default function(props: ResultListProps) {
     const classes = useStyles();
     let content: JSX.Element | JSX.Element[];
-    if(props.list.length == 0) {
+    if(props.list.length === 0) {
         content = (
             <Box className={classes.box}>
                 <Typography variant="h6">ここに提出結果が表示されます。</Typography>

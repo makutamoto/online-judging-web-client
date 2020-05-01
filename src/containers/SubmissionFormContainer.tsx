@@ -27,7 +27,7 @@ const mapStateToProps = (state: StateType) => ({
 const mapDispatchToProps = (dispatch: DispatchType) => ({
     onLangChange: (lang: string) => dispatch(setCodeLang(lang)),
     onCodeChange: (code: string) => dispatch(setCode(code)),
-    onSubmit: (submission: Submission) => dispatch(submitResult(submission) as any),
+    onSubmit: (contest: string, task: number, submission: Submission) => dispatch(submitResult(contest, task, submission) as any),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm);
