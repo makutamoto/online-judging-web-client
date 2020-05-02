@@ -1,29 +1,10 @@
 import React from 'react';
-import { Switch, Redirect, Route, Link as RouterLink } from 'react-router-dom';
+import { Switch, Route, Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Container, Link, Paper, Toolbar, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import ContestContainer from './ContestContainer';
-import TaskListContainer from './TaskListContainer';
-import TaskContainer from './TaskContainer';
-import ContestTabContainer from './ContestTabContainer';
 
-const useStyles = makeStyles((theme) => ({
-    tab: {
-        position: 'sticky',
-        top: theme.spacing(8),
-        marginLeft: theme.spacing(-3),
-        marginRight: theme.spacing(-3),
-        zIndex: 128,
-        background: '#FFFFFF',
-    },
-    content: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-}));
 export default function() {
-    const classes = useStyles();
     return (
         <React.Fragment>
             <AppBar>
@@ -39,17 +20,9 @@ export default function() {
                 </Box>
                 <Box flexGrow={1}>
                     <Container className="height100" maxWidth="md" component={Paper} square>
-                        <Box className={classes.tab}>
-                            <ContestTabContainer />
-                        </Box>
-                        <Box className={classes.content}>
-                            <Switch>
-                                <Route exact path="/contests/:contest/tasks/:task(\d+)" component={TaskContainer} />
-                                <Route exact path="/contests/:contest/tasks/" component={TaskListContainer} />
-                                <Route exact path="/contests/:contest" component={ContestContainer} />
-                                <Redirect to="/" />
-                            </Switch>
-                        </Box>
+                        <Switch>
+                            <Route path="/contests/:contest" component={ContestContainer} />
+                        </Switch>
                     </Container>
                 </Box>
             </Box>

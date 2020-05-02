@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Box, Divider, Typography } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Code from './Code';
+import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -26,7 +25,7 @@ export default function(props: ProblemViewProps) {
             <Typography className={classes.title} variant="h4">{props.title}</Typography>
             <Divider />
             <Typography className={classes.limit} variant="h6">実行時間制限: {props.timeLimit! / 1000} sec</Typography>
-            <ReactMarkdown source={props.problem!} renderers={{ code: Code }} />
+            <Markdown value={props.problem!} />
         </React.Fragment>
     );
 }

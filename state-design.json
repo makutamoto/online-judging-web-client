@@ -3,7 +3,8 @@
     "contest": {
         "data": {
             "title": "AAAA",
-            "description": "AAAA"
+            "description": "AAAA",
+            "explanation": "AAAA"
         }
     },
     "task": {

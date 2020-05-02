@@ -5,7 +5,7 @@ import { Divider, Tab, Tabs } from '@material-ui/core';
 
 import { Page } from '../actions';
 
-const pathRegex = /[^\/]+/g;
+const pathRegex = /[^/]+/g;
 
 function getLink(to: string, location: any): string {
     let pathname: string = location.pathname;
@@ -26,7 +26,7 @@ export default function(props: ContestTabProps) {
             <Tabs value={value} indicatorColor="primary" textColor="primary" centered>
                 <Tab label="概要" component={RouterLink} to={getLink.bind(null, '')} />
                 <Tab label="問題" component={RouterLink} to={getLink.bind(null, 'tasks')} />
-                <Tab label="解説" component={RouterLink} to={getLink.bind(null, 'explanation')} disabled />
+                <Tab label="解説" component={RouterLink} to={getLink.bind(null, 'explanation')} />
             </Tabs>
             <Divider />
         </React.Fragment>

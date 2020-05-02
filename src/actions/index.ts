@@ -21,6 +21,7 @@ export const setCurrentPage = (page: Page) => ({
 export interface ContestInfo {
     title: string,
     description: string,
+    explanation: string,
 }
 export interface RequestContestInfoAction {
     type: string,
