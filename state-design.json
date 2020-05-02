@@ -1,4 +1,11 @@
 {
+    "current_page": "task",
+    "contest": {
+        "data": {
+            "title": "AAAA",
+            "description": "AAAA"
+        }
+    },
     "task": {
         "id": "bc01",
         "data": {

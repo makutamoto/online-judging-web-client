@@ -8,6 +8,48 @@ export const StatusRE = 2;
 export const StatusTLE = 3;
 export const StatusCE = 4;
 
+export type Page = 'home' | 'contest' | 'task' | 'explanation';
+export interface SetCurrentPageAction {
+    type: string,
+    page: Page,
+}
+export const setCurrentPage = (page: Page) => ({
+    type: 'SET_CURRENT_PAGE',
+    page,
+});
+
+export interface ContestInfo {
+    title: string,
+    description: string,
+}
+export interface RequestContestInfoAction {
+    type: string,
+}
+export const requestContestInfo = () => ({
+    type: 'REQUEST_CONTEST_INFO',
+});
+
+export interface ReceiveContestInfoAction {
+    type: string,
+    data: ContestInfo,
+}
+export const receiveContestInfo = (data: ContestInfo) => ({
+    type: 'RECEIVE_CONTEST_INFO',
+    data,
+});
+
+export const fetchContestInfo = (contest: string) => (dispatch: DispatchType) => {
+    dispatch(requestContestInfo());
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/contests/${contest}/json`)
+            .then((response) => {
+                dispatch(receiveContestInfo(response.data));
+                resolve();
+            })
+            .catch(reject);
+    });
+};
+
 export interface TaskListRow {
     title: string,
     time_limit: number,

@@ -8,6 +8,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import * as serviceWorker from './serviceWorker';
 
+import './index.css';
 import rootReducer from './reducers';
 import App from './containers/App';
 

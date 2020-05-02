@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { DispatchType } from '../';
 import { StateType } from '../reducers';
-import { fetchTaskList, TaskListRow } from '../actions';
+import { setCurrentPage, fetchTaskList, TaskListRow } from '../actions';
 import TaskList from '../components/TaskList';
 
 interface TaskListContainerProps {
@@ -25,7 +25,10 @@ const mapStateToProps = (state: StateType) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onMount: (contest: string) => dispatch(fetchTaskList(contest) as any),
+    onMount: (contest: string) => {
+        dispatch(setCurrentPage('task'));
+        dispatch(fetchTaskList(contest) as any);
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskListContainer);
