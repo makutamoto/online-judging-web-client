@@ -24,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
     tab: {
         position: 'sticky',
-        top: theme.spacing(8),
+        [theme.breakpoints.up('xs')]: {
+            top: theme.spacing(8),
+        },
+        [theme.breakpoints.down('xs')]: {
+            top: theme.spacing(7),
+        },
         marginLeft: theme.spacing(-3),
         marginRight: theme.spacing(-3),
         zIndex: 128,
