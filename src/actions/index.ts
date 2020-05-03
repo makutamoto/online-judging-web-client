@@ -76,6 +76,8 @@ export const fetchTaskList = (contest: string) => (dispatch: DispatchType) => {
     return new Promise((resolve, reject) => {
         axios.get(`http://localhost:8080/contests/${contest}/tasks/json`)
             .then((response) => {
+                let data: TaskListRow[] = response.data;
+                data.forEach((row, i) => row.title = `${String.fromCharCode('A'.charCodeAt(0) + i)}. ${row.title}`);
                 dispatch(receiveTaskList(response.data));
                 resolve();
             })
@@ -116,7 +118,6 @@ export const setCode = (code: string) => ({
 });
 
 export interface TaskData {
-    title: string,
     problem: string,
     time_limit: number,
 }

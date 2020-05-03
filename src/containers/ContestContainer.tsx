@@ -8,8 +8,7 @@ import { DispatchType } from '../';
 import { fetchContestInfo, ContestInfo } from '../actions';
 import { StateType } from '../reducers';
 import ContestTabContainer from './ContestTabContainer';
-import TaskContainer from './TaskContainer';
-import TaskListContainer from './TaskListContainer';
+import TaskTabContainer from './TaskTabContainer';
 import ContestOverviewContainer from './ContestOverviewContainer';
 import ContestExplanationContainer from './ContestExplanationContainer';
 
@@ -19,19 +18,27 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(4),
     },
     titleDivider: {
-        marginLeft: theme.spacing(-3),
-        marginRight: theme.spacing(-3),
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: theme.spacing(-2),
+            marginRight: theme.spacing(-2),
+        },
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(-3),
+            marginRight: theme.spacing(-3),
+        },
     },
     tab: {
         position: 'sticky',
-        [theme.breakpoints.up('xs')]: {
-            top: theme.spacing(8),
-        },
         [theme.breakpoints.down('xs')]: {
             top: theme.spacing(7),
+            marginLeft: theme.spacing(-2),
+            marginRight: theme.spacing(-2),
         },
-        marginLeft: theme.spacing(-3),
-        marginRight: theme.spacing(-3),
+        [theme.breakpoints.up('sm')]: {
+            top: theme.spacing(8),
+            marginLeft: theme.spacing(-3),
+            marginRight: theme.spacing(-3),
+        },
         zIndex: 128,
         background: '#FFFFFF',
     },
@@ -54,8 +61,7 @@ function Contest(props: ContestProps) {
             </Box>
             <Box className={classes.content}>
                 <Switch>
-                    <Route exact path="/contests/:contest/tasks/:task(\d+)" component={TaskContainer} />
-                    <Route exact path="/contests/:contest/tasks/" component={TaskListContainer} />
+                    <Route path="/contests/:contest/tasks/" component={TaskTabContainer} />
                     <Route exact path="/contests/:contest/explanation" component={ContestExplanationContainer} />
                     <Route exact path="/contests/:contest/" component={ContestOverviewContainer} />
                     <Redirect to="/" />

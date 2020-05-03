@@ -1,10 +1,13 @@
 import React from 'react';
-import { Divider, Typography } from '@material-ui/core';
+import { Box, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        marginBottom: theme.spacing(4),
+    },
     title: {
         marginBottom: theme.spacing(3),
     },
@@ -21,11 +24,11 @@ export interface ProblemViewProps {
 export default function(props: ProblemViewProps) {
     const classes = useStyles();
     return (
-        <React.Fragment>
+        <Box className={classes.root}>
             <Typography className={classes.title} variant="h4">{props.title}</Typography>
             <Divider />
             <Typography className={classes.limit} variant="h6">実行時間制限: {props.timeLimit! / 1000} sec</Typography>
             <Markdown value={props.problem!} />
-        </React.Fragment>
+        </Box>
     );
 }
