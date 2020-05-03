@@ -55,7 +55,7 @@ export default function(props: NextPreviousProps) {
     return (
         <Box display="flex" className={classes.root}>
             <Box flexGrow={1} className={clsx(classes.common, classes.previous)}>
-                {props.previous && <Link component={RouterLink} to={`${props.previous.link}`}>
+                {props.previous && <Link color="textSecondary" component={RouterLink} to={`${props.previous.link}`}>
                     <Box className={classes.width100} display="flex" alignItems="center">
                         <Box className={classes.icon}>
                             <KeyboardArrowLeft color="action" />
@@ -69,7 +69,7 @@ export default function(props: NextPreviousProps) {
                 </Link>}
             </Box>
             <Box flexGrow={1} className={clsx(classes.common, classes.next)}>
-                {props.next && <Link component={RouterLink} to={`${props.next.link}`}>
+                {props.next && <Link color="textSecondary" component={RouterLink} to={`${props.next.link}`}>
                     <Box className={classes.width100} display="flex" alignItems="center" flexDirection="row-reverse">
                         <Box className={classes.icon}>
                             <KeyboardArrowRight color="action" />

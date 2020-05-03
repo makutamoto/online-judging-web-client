@@ -6,6 +6,9 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { CssBaseline } from '@material-ui/core';
 
+// @ts-ignore
+import ScrollMemory from 'react-router-scroll-memory';
+
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
@@ -25,6 +28,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
+        <ScrollMemory />
         <CssBaseline />
         <App />
       </Router>
