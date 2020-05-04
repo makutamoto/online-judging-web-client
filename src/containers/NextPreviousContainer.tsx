@@ -21,7 +21,7 @@ function NextPreviousContainer(props: NextPreviousContainerProps) {
 }
 
 const mapStateToProps = (state: StateType) => ({
-    list: state.tasks.list,
+    list: state.task_list.list,
 });
 
 export default connect(mapStateToProps)(NextPreviousContainer);

@@ -8,7 +8,7 @@ export const StatusRE = 2;
 export const StatusTLE = 3;
 export const StatusCE = 4;
 
-export type Page = 'home' | 'contest' | 'task' | 'explanation';
+export type Page = 'home' | 'contest_list' | 'contest' | 'task' | 'explanation';
 export interface SetCurrentPageAction {
     type: string,
     page: Page,
@@ -17,6 +17,65 @@ export const setCurrentPage = (page: Page) => ({
     type: 'SET_CURRENT_PAGE',
     page,
 });
+
+export interface SystemOverview {
+    overview: string,
+}
+export interface RequestSystemOverviewAction {
+    type: string,
+}
+export const requestSystemOverview = () => ({
+    type: 'REQUEST_SYSTEM_OVERVIEW',
+});
+export interface ReceiveSystemOverviewAction {
+    type: string,
+    data: SystemOverview,
+}
+export const receiveSystemOverview = (data: SystemOverview) => ({
+    type: 'RECEIVE_SYSTEM_OVERVIEW',
+    data,
+});
+export const fetchSystemOverview = () => (dispatch: DispatchType) => {
+    dispatch(requestSystemOverview());
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/json`)
+            .then((response) => {
+                dispatch(receiveSystemOverview(response.data));
+                resolve();
+            })
+            .catch(reject);
+    });
+};
+
+export interface ContestListRow {
+    id: string,
+    title: string,
+}
+export interface RequestContestListAction {
+    type: string,
+}
+export const requestContestList = () => ({
+    type: 'REQUEST_CONTEST_LIST',
+});
+export interface ReceiveContestListAction {
+    type: string,
+    list: ContestListRow[],
+}
+export const receiveContestList = (list: ContestListRow[]) => ({
+    type: 'RECEIVE_CONTEST_LIST',
+    list,
+});
+export const fetchContestList = () => (dispatch: DispatchType) => {
+    dispatch(requestContestList());
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/contests/json`)
+            .then((response) => {
+                dispatch(receiveContestList(response.data));
+                resolve();
+            })
+            .catch(reject);
+    });
+};
 
 export interface ContestInfo {
     title: string,

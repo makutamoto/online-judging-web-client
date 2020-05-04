@@ -5,18 +5,17 @@ import { Page } from '../actions';
 import { StateType } from '../reducers';
 import RouteTab from '../components/RouteTab';
 
-interface ContestTabContainerProps {
+interface HomeTabContainerProps {
     value: Page,
 }
-function ContestTabContainer(props: ContestTabContainerProps) {
+function HomeTabContainer(props: HomeTabContainerProps) {
     return (
         <RouteTab
-            base={2}
+            base={0}
             value={props.value}
             data={[
-                { id: 'contest', title: "概要", link: "" },
-                { id: 'task', title: "問題", link: "tasks" },
-                { id: 'explanation', title: "解説", link: "explanation" },
+                { id: 'home', title: "ホーム", link: "" },
+                { id: 'contest_list', title: "コンテスト一覧", link: "contests" },
             ]}
         />
     );
@@ -26,4 +25,4 @@ const mapStateToProps = (state: StateType) => ({
     value: state.current_page,
 });
 
-export default connect(mapStateToProps)(ContestTabContainer);
+export default connect(mapStateToProps)(HomeTabContainer);

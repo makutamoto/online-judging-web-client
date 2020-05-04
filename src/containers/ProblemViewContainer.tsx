@@ -32,7 +32,7 @@ class ProblemViewContainer extends React.Component<ProblemViewContainerProps> {
 }
 
 const mapStateToProps = (state: StateType) => ({
-    tasks: state.tasks.list,
+    tasks: state.task_list.list,
     info: state.task.data,
 });
 

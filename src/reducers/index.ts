@@ -3,24 +3,30 @@ import { combineReducers } from 'redux';
 import code, { CodeState } from './code';
 import results, { ResultsState } from './results';
 import task, { TaskState } from './task';
-import tasks, { TasksState } from './tasks';
+import task_list, { TaskListState } from './task_list';
 import contest, { ContestState } from './contest';
 import current_page, { CurrentPageState } from './current_page';
+import system, { SystemState } from './system';
+import contest_list, { ContestListState } from './contest_list';
 
 export interface StateType {
     code: CodeState,
     results: ResultsState,
     task: TaskState,
-    tasks: TasksState,
+    task_list: TaskListState,
     contest: ContestState,
     current_page: CurrentPageState,
+    system: SystemState,
+    contest_list: ContestListState,
 }
 
 export default combineReducers({
     code,
     results,
     task,
-    tasks,
+    task_list,
     contest,
     current_page,
+    system,
+    contest_list,
 });

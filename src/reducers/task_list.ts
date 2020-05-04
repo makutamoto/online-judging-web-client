@@ -1,9 +1,9 @@
 import { RequestTaskListAction, ReceiveTaskListAction, TaskListRow } from '../actions';
 
-export interface TasksState {
+export interface TaskListState {
     list: TaskListRow[] | null,
 }
-export default function(state: TasksState = { list: null }, action: RequestTaskListAction | ReceiveTaskListAction): TasksState {
+export default function(state: TaskListState = { list: null }, action: RequestTaskListAction | ReceiveTaskListAction): TaskListState {
     switch(action.type) {
         case 'REQUEST_TASK_LIST':
             return { list: null };

@@ -15,7 +15,7 @@ class TaskListContainer extends React.Component<TaskListContainerProps> {
 }
 
 const mapStateToProps = (state: StateType) => ({
-    list: state.tasks.list,
+    list: state.task_list.list,
 });
 
 export default connect(mapStateToProps)(TaskListContainer);
