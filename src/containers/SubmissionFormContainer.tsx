@@ -11,15 +11,10 @@ const langs: LangInfo[] = [
     { id: "golang", name: "Go" },
 ];
 
-const editorLangs: { [index: string]: string } = {
-    "gcc": "text/x-csrc",
-    "golang": "text/x-go",
-};
-
 const mapStateToProps = (state: StateType) => ({
     langs: langs,
     lang: state.code.lang,
-    editorLang: editorLangs[state.code.lang],
+    editorLang: state.code.lang,
     code: state.code.code,
     isSubmitting: state.code.isSubmitting,
 });
@@ -27,7 +22,13 @@ const mapStateToProps = (state: StateType) => ({
 const mapDispatchToProps = (dispatch: DispatchType) => ({
     onLangChange: (lang: string) => dispatch(setCodeLang(lang)),
     onCodeChange: (code: string) => dispatch(setCode(code)),
-    onSubmit: (contest: string, task: number, submission: Submission) => dispatch(submitResult(contest, task, submission) as any),
+    onSubmit: (contest: string, task: number, submission: Submission) => {
+        dispatch(submitResult(contest, task, submission) as any);
+        window.scrollTo({
+            top: document.querySelector('.SubmitButton')!.getBoundingClientRect().top - document.body.getBoundingClientRect().top - 128,
+            behavior: 'smooth'
+        });
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm);

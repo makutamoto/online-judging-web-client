@@ -38,7 +38,7 @@ export const receiveSystemOverview = (data: SystemOverview) => ({
 export const fetchSystemOverview = () => (dispatch: DispatchType) => {
     dispatch(requestSystemOverview());
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:8080/json`)
+        axios.get(`http://localhost:8080/api/`)
             .then((response) => {
                 dispatch(receiveSystemOverview(response.data));
                 resolve();
@@ -68,7 +68,7 @@ export const receiveContestList = (list: ContestListRow[]) => ({
 export const fetchContestList = () => (dispatch: DispatchType) => {
     dispatch(requestContestList());
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:8080/contests/json`)
+        axios.get(`http://localhost:8080/api/contests/`)
             .then((response) => {
                 dispatch(receiveContestList(response.data));
                 resolve();
@@ -101,7 +101,7 @@ export const receiveContestInfo = (data: ContestInfo) => ({
 export const fetchContestInfo = (contest: string) => (dispatch: DispatchType) => {
     dispatch(requestContestInfo());
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:8080/contests/${contest}/json`)
+        axios.get(`http://localhost:8080/api/contests/${contest}`)
             .then((response) => {
                 dispatch(receiveContestInfo(response.data));
                 resolve();
@@ -133,7 +133,7 @@ export const receiveTaskList = (data: TaskListRow[]) => ({
 export const fetchTaskList = (contest: string) => (dispatch: DispatchType) => {
     dispatch(requestTaskData());
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:8080/contests/${contest}/tasks/json`)
+        axios.get(`http://localhost:8080/api/contests/${contest}/tasks/`)
             .then((response) => {
                 let data: TaskListRow[] = response.data;
                 data.forEach((row, i) => row.title = `${String.fromCharCode('A'.charCodeAt(0) + i)}. ${row.title}`);
@@ -197,7 +197,7 @@ export const receiveTaskData = (data: TaskData) => ({
 export const fetchTaskData = (contest: string, task: number) => (dispatch: DispatchType) => {
     dispatch(requestTaskData());
     return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:8080/contests/${contest}/tasks/${task}/json`)
+        axios.get(`http://localhost:8080/api/contests/${contest}/tasks/${task}`)
         .then((response) => {
             dispatch(receiveTaskData(response.data));
             resolve();
@@ -230,7 +230,9 @@ export interface DetailRow {
 }
 export interface Detail {
     max_time: number,
-	max_memory: number,
+    max_memory: number,
+    lang: string,
+    code: string,
 	compile_error: string,
 	details: DetailRow[] | null,
 }
@@ -277,13 +279,13 @@ export const fetchResult = (id: string) => (dispatch: DispatchType, getState: an
     new Promise((resolve, reject) => {
         let socket: WebSocket;
         dispatch(requestResult(id));
-        socket = new WebSocket(`ws://localhost:8080/submissions/realtime/${id}`);
+        socket = new WebSocket(`ws://localhost:8080/api/submissions/realtime/${id}`);
         socket.addEventListener('message', (e) => {
             dispatch(updateResult(id, JSON.parse(e.data)));
         });
         socket.addEventListener('error', reject);
         socket.addEventListener('close', () => {
-            axios.get(`http://localhost:8080/submissions/details/${id}`)
+            axios.get(`http://localhost:8080/api/submissions/details/${id}`)
                 .then((response) => {
                     dispatch(receiveResultDetails(id, response.data));
                     dispatch(receiveResult(id));
@@ -300,7 +302,7 @@ export interface Submission {
 }
 export const submitResult = (contest: string, task: number, submission: Submission) => (dispatch: DispatchType) => {
     dispatch(requestCodeSubmission());
-    return axios.post(`http://localhost:8080/contests/${contest}/tasks/${task}`, submission)
+    return axios.post(`http://localhost:8080/api/contests/${contest}/tasks/${task}`, submission)
         .then((response) => {
             dispatch(receiveCodeSubmission());
             dispatch(fetchResult(response.data.id) as any);

@@ -1,13 +1,21 @@
 import React from 'react';
 import { Switch, Route, Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Container, Link, Paper, Toolbar, Typography } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import HomeContainer from './HomeContainer';
 import ContestContainer from './ContestContainer';
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#1C395C',
+        },
+    },
+});
 export default function() {
     return (
-        <React.Fragment>
+        <ThemeProvider theme={theme}>
             <AppBar>
                 <Toolbar>
                     <Link component={RouterLink} to="/" color="inherit">
@@ -28,6 +36,6 @@ export default function() {
                     </Container>
                 </Box>
             </Box>
-        </React.Fragment>
+        </ThemeProvider>
     );
 }

@@ -8,7 +8,7 @@ export interface SubmitButtonProps {
 }
 export default function(props: SubmitButtonProps) {
     return (
-        <Button variant="contained" color="primary" disabled={props.isSubmitting} onClick={props.onClick}>
+        <Button className="SubmitButton" variant="contained" color="primary" disabled={props.isSubmitting} onClick={props.onClick}>
             {props.isSubmitting ? <CircularProgress size={24} /> : '提出'}
         </Button>
     )

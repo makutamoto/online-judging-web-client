@@ -5,7 +5,7 @@ export interface CodeState {
     lang: string,
     code: string,
 }
-export default function(state: CodeState = { isSubmitting: false, lang: "gcc", code: "" }, action: RequestCodeSubmissionAction | ReceiveCodeSubmissionAction | SetCodeLangAction | SetCodeAction): CodeState {
+export default function(state: CodeState = { isSubmitting: false, lang: window.localStorage.codeLang || "gcc", code: "" }, action: RequestCodeSubmissionAction | ReceiveCodeSubmissionAction | SetCodeLangAction | SetCodeAction): CodeState {
     switch(action.type) {
         case 'REQUEST_CODE_SUBMISSION':
             return { ...state, isSubmitting: true };
@@ -13,6 +13,7 @@ export default function(state: CodeState = { isSubmitting: false, lang: "gcc", c
             return { ...state, isSubmitting: false };
         case 'SET_CODE_LANG':
             let lang = (action as SetCodeLangAction).lang;
+            window.localStorage.codeLang = lang;
             return { ...state, lang };
         case 'SET_CODE':
             let code = (action as SetCodeAction).code;

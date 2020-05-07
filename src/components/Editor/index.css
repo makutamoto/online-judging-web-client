@@ -1,6 +1,9 @@
 .CodeMirror {
-    height: auto;
     border: solid 1px lightgray;
+}
+
+.CMAutoResize .CodeMirror {
+    height: auto;
 }
 
 .CodeMirror-scroll {
