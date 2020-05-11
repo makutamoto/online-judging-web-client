@@ -1,8 +1,9 @@
 import React from 'react';
-import { Switch, Route, Link as RouterLink } from 'react-router-dom';
-import { AppBar, Box, Container, Link, Paper, Toolbar, Typography } from '@material-ui/core';
+import { Switch, Route } from 'react-router-dom';
+import { Box, Container, Paper, Toolbar } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+import BarContainer from './BarContainer';
 import HomeContainer from './HomeContainer';
 import ContestContainer from './ContestContainer';
 
@@ -16,13 +17,7 @@ const theme = createMuiTheme({
 export default function() {
     return (
         <ThemeProvider theme={theme}>
-            <AppBar>
-                <Toolbar>
-                    <Link component={RouterLink} to="/" color="inherit">
-                        <Typography variant="h6">MyCoder</Typography>
-                    </Link>
-                </Toolbar>
-            </AppBar>
+            <BarContainer />
             <Box className="height100" display="flex" flexDirection="column">
                 <Box>
                     <Toolbar />

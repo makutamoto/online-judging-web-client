@@ -8,6 +8,7 @@ import Markdown from '../components/Markdown';
 
 interface HomeOverviewContainerProps {
     data: SystemOverview | null,
+    edit: boolean,
     onMount: () => void,
 }
 class HomeOverviewContainer extends React.Component<HomeOverviewContainerProps> {
@@ -16,12 +17,13 @@ class HomeOverviewContainer extends React.Component<HomeOverviewContainerProps> 
     }
     render() {
         let overview = this.props.data && this.props.data.overview;
-        return <Markdown value={overview!} />
+        return <Markdown value={overview!} edit={this.props.edit} />
     }
 }
 
 const mapStateToProps = (state: StateType) => ({
     data: state.system.data,
+    edit: state.edit,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

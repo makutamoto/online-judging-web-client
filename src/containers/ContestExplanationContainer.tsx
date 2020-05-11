@@ -8,6 +8,7 @@ import Markdown from '../components/Markdown';
 
 interface ContestExplanationContainerProps {
     data: ContestInfo | null,
+    edit: boolean,
     onMount: () => void,
 }
 class ContestExplanationContainer extends React.Component<ContestExplanationContainerProps> {
@@ -16,12 +17,13 @@ class ContestExplanationContainer extends React.Component<ContestExplanationCont
     }
     render() {
         let explanation = this.props.data && this.props.data.explanation;
-        return <Markdown value={explanation!} />;
+        return <Markdown value={explanation!} edit={this.props.edit} />;
     }
 }
 
 const mapStateToProps = (state: StateType) => ({
     data: state.contest.data,
+    edit: state.edit,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

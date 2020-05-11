@@ -3,12 +3,14 @@ import CodeMirror from 'react-codemirror';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/clike/clike';
 import 'codemirror/mode/go/go';
+import 'codemirror/mode/markdown/markdown';
 
 import './index.css';
 
 const langs: { [index: string]: string } = {
     "gcc": "text/x-csrc",
     "golang": "text/x-go",
+    "markdown": "text/x-markdown",
 };
 
 export interface EditorProps {

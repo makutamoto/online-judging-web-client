@@ -8,6 +8,7 @@ import Markdown from '../components/Markdown';
 
 interface ContestOverviewContainerProps {
     data: ContestInfo | null,
+    edit: boolean,
     onMount: () => void,
 }
 class ContestOverviewContainer extends React.Component<ContestOverviewContainerProps> {
@@ -16,12 +17,13 @@ class ContestOverviewContainer extends React.Component<ContestOverviewContainerP
     }
     render() {
         let description = this.props.data && this.props.data.description;
-        return <Markdown value={description!} />;
+        return <Markdown value={description!} edit={this.props.edit} />;
     }
 }
 
 const mapStateToProps = (state: StateType) => ({
     data: state.contest.data,
+    edit: state.edit,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

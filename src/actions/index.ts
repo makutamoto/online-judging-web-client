@@ -18,6 +18,15 @@ export const setCurrentPage = (page: Page) => ({
     page,
 });
 
+export interface SetEditAction {
+    type: string,
+    edit: boolean,
+}
+export const setEdit = (edit: boolean) => ({
+    type: 'SET_EDIT',
+    edit,
+});
+
 export interface SystemOverview {
     overview: string,
 }
