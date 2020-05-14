@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Link, Switch, Toolbar, Typography } from '@material-ui/core';
+import { RouteComponentProps } from 'react-router';
+import { Link as RouterLink, Prompt, withRouter } from 'react-router-dom';
+import { AppBar, Button, Link, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { DispatchType } from '../';
-import { setEdit } from '../actions';
+import { setEditState, callEditCallback } from '../actions';
 import { StateType } from '../reducers';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-});
-interface BarContainerProps {
+    cancelButton: {
+        marginRight: theme.spacing(1),
+    },
+}));
+interface BarContainerProps extends RouteComponentProps {
     edit: boolean,
+    updated: boolean,
     onChange: (val: boolean) => void,
+    onPageChange: () => void,
 }
 function BarContainer(props: BarContainerProps) {
+    let { onPageChange, history } = props;
+    useEffect(() => history.listen(onPageChange), [onPageChange, history]);
     const classes = useStyles();
     return (
         <AppBar>
@@ -25,18 +33,25 @@ function BarContainer(props: BarContainerProps) {
                 <Link className={classes.title} component={RouterLink} to="/" color="inherit">
                     <Typography variant="h6">MyCoder</Typography>
                 </Link>
-                <Switch checked={props.edit} onChange={(e) => props.onChange(e.target.checked)} />
+                {props.edit && <Button className={classes.cancelButton} color="secondary" variant="contained" onClick={() => props.onChange(false)}>CANCEL</Button>}
+                <Button variant="contained" onClick={() => props.onChange(!props.edit)}>{props.edit ? "SAVE" : "EDIT"}</Button>
+                <Prompt when={props.updated} message="There are unsaved changes. Are you sure you want to leave this page?" />
             </Toolbar>
         </AppBar>
     )
 }
 
 const mapStateToProps = (state: StateType) => ({
-    edit: state.edit,
+    edit: state.edit.state,
+    updated: state.edit.buffer !== null,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onChange: (val: boolean) => dispatch(setEdit(val)),
+    onChange: (val: boolean) => {
+        if(!val) dispatch(callEditCallback() as any);
+        dispatch(setEditState(val));
+    },
+    onPageChange: () => dispatch(setEditState(false)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BarContainer));

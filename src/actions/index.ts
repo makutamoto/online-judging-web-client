@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { DispatchType } from '../';
+import { StateType } from '../reducers';
 
 export const StatusAC = 0;
 export const StatusWA = 1;
@@ -18,14 +19,37 @@ export const setCurrentPage = (page: Page) => ({
     page,
 });
 
-export interface SetEditAction {
+export interface SetEditStateAction {
     type: string,
-    edit: boolean,
+    state: boolean,
 }
-export const setEdit = (edit: boolean) => ({
-    type: 'SET_EDIT',
-    edit,
+export const setEditState = (state: boolean) => ({
+    type: 'SET_EDIT_STATE',
+    state,
 });
+export interface SetEditBufferAction {
+    type: string,
+    buffer: any,
+}
+export const setEditBuffer = (buffer: any) => ({
+    type: 'SET_EDIT_BUFFER',
+    buffer,
+});
+export interface SetEditCallbackAction {
+    type: string,
+    callback: ((dispatch: DispatchType) => void) | null,
+}
+export const setEditCallback = (callback: ((dispatch: DispatchType) => void) | null) => ({
+    type: 'SET_EDIT_CALLBACK',
+    callback,
+});
+export const callEditCallback = () => (dispatch: DispatchType, getState: () => StateType) => {
+    return new Promise((resolve) => {
+        let state = getState();
+        if(state.edit.buffer !== null && state.edit.callback !== null) state.edit.callback(dispatch);
+        resolve();
+    });
+};
 
 export interface SystemOverview {
     overview: string,
@@ -50,6 +74,17 @@ export const fetchSystemOverview = () => (dispatch: DispatchType) => {
         axios.get(`http://localhost:8080/api/`)
             .then((response) => {
                 dispatch(receiveSystemOverview(response.data));
+                resolve();
+            })
+            .catch(reject);
+    });
+};
+export const updateSystemOverview = () => (dispatch: DispatchType, getState: () => StateType) => {
+    return new Promise((resolve, reject) => {
+        let state = getState();
+        axios.put(`http://localhost:8080/api/`, { overview: state.edit.buffer })
+            .then(() => {
+                dispatch(fetchSystemOverview() as any);
                 resolve();
             })
             .catch(reject);

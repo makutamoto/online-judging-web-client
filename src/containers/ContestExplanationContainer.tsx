@@ -23,7 +23,7 @@ class ContestExplanationContainer extends React.Component<ContestExplanationCont
 
 const mapStateToProps = (state: StateType) => ({
     data: state.contest.data,
-    edit: state.edit,
+    edit: state.edit.state,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

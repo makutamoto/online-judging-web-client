@@ -23,7 +23,7 @@ class ContestOverviewContainer extends React.Component<ContestOverviewContainerP
 
 const mapStateToProps = (state: StateType) => ({
     data: state.contest.data,
-    edit: state.edit,
+    edit: state.edit.state,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

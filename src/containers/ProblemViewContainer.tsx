@@ -50,7 +50,7 @@ function ProblemViewContainer(props: ProblemViewContainerProps) {
 const mapStateToProps = (state: StateType) => ({
     tasks: state.task_list.list,
     info: state.task.data,
-    edit: state.edit,
+    edit: state.edit.state,
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({

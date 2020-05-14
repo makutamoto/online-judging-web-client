@@ -1,6 +1,10 @@
 {
     "current_page": "task",
-    "edit": false,
+    "edit": {
+        "state": false,
+        "buffer": null,
+        "callback": null
+    },
     "system": {
         "data": {
             "overview": "AAA"
