@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { StateType } from '../reducers';
-import { setCurrentPage, ContestInfo } from '../actions';
+import { setCurrentPage, setEditBuffer, setEditCallback, updateContestExplanation, ContestInfo } from '../actions';
 import { DispatchType } from '..';
 import Markdown from '../components/Markdown';
 
-interface ContestExplanationContainerProps {
+interface ContestExplanationContainerParams {
+    contest: string,
+}
+interface ContestExplanationContainerProps extends RouteComponentProps<ContestExplanationContainerParams> {
     data: ContestInfo | null,
     edit: boolean,
-    onMount: () => void,
+    onMount: (contest: string) => void,
+    onChange: (newValue: string) => void,
 }
-class ContestExplanationContainer extends React.Component<ContestExplanationContainerProps> {
-    componentDidMount() {
-        this.props.onMount();
-    }
-    render() {
-        let explanation = this.props.data && this.props.data.explanation;
-        return <Markdown value={explanation!} edit={this.props.edit} />;
-    }
+function ContestExplanationContainer(props: ContestExplanationContainerProps) {
+    let { onMount } = props;
+    let { contest } = props.match.params;
+    useEffect(() => onMount(contest), [onMount, contest]);
+    let explanation = props.data && props.data.explanation;
+    return <Markdown value={explanation!} edit={props.edit} onChange={props.onChange} />;
 }
 
 const mapStateToProps = (state: StateType) => ({
@@ -27,7 +30,11 @@ const mapStateToProps = (state: StateType) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onMount: () => dispatch(setCurrentPage('explanation')),
+    onMount: (contest: string) => {
+        dispatch(setCurrentPage('explanation'));
+        dispatch(setEditCallback(() => dispatch(updateContestExplanation(contest) as any)));
+    },
+    onChange: (val: string) => dispatch(setEditBuffer(val)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestExplanationContainer);

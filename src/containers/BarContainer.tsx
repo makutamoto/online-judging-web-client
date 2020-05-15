@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 interface BarContainerProps extends RouteComponentProps {
     edit: boolean,
     updated: boolean,
-    onChange: (val: boolean) => void,
+    onChange: (val: boolean, cancel: boolean) => void,
     onPageChange: () => void,
 }
 function BarContainer(props: BarContainerProps) {
@@ -33,8 +33,8 @@ function BarContainer(props: BarContainerProps) {
                 <Link className={classes.title} component={RouterLink} to="/" color="inherit">
                     <Typography variant="h6">MyCoder</Typography>
                 </Link>
-                {props.edit && <Button className={classes.cancelButton} color="secondary" variant="contained" onClick={() => props.onChange(false)}>CANCEL</Button>}
-                <Button variant="contained" onClick={() => props.onChange(!props.edit)}>{props.edit ? "SAVE" : "EDIT"}</Button>
+                {props.edit && <Button className={classes.cancelButton} color="secondary" variant="contained" onClick={() => props.onChange(false, true)}>CANCEL</Button>}
+                <Button variant="contained" onClick={() => props.onChange(!props.edit, false)}>{props.edit ? "SAVE" : "EDIT"}</Button>
                 <Prompt when={props.updated} message="There are unsaved changes. Are you sure you want to leave this page?" />
             </Toolbar>
         </AppBar>
@@ -47,8 +47,8 @@ const mapStateToProps = (state: StateType) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onChange: (val: boolean) => {
-        if(!val) dispatch(callEditCallback() as any);
+    onChange: (val: boolean, cancel: boolean) => {
+        if(!val && !cancel) dispatch(callEditCallback() as any);
         dispatch(setEditState(val));
     },
     onPageChange: () => dispatch(setEditState(false)),

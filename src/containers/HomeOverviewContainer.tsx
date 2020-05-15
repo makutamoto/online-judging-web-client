@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { DispatchType } from '../';
@@ -10,16 +10,13 @@ interface HomeOverviewContainerProps {
     data: SystemOverview | null,
     edit: boolean,
     onMount: () => void,
-    onChange?: (newValue: string) => void,
+    onChange: (newValue: string) => void,
 }
-class HomeOverviewContainer extends React.Component<HomeOverviewContainerProps> {
-    componentDidMount() {
-        this.props.onMount();
-    }
-    render() {
-        let overview = this.props.data && this.props.data.overview;
-        return <Markdown value={overview!} edit={this.props.edit} onChange={this.props.onChange} />
-    }
+function HomeOverviewContainer(props: HomeOverviewContainerProps) {
+    let { onMount } = props;
+    useEffect(() => onMount(), [onMount]);
+    let overview = props.data && props.data.overview;
+    return <Markdown value={overview!} edit={props.edit} onChange={props.onChange} />
 }
 
 const mapStateToProps = (state: StateType) => ({

@@ -153,6 +153,28 @@ export const fetchContestInfo = (contest: string) => (dispatch: DispatchType) =>
             .catch(reject);
     });
 };
+export const updateContestOverview = (contest: string) => (dispatch: DispatchType, getState: () => StateType) => {
+    return new Promise((resolve, reject) => {
+        let state = getState();
+        axios.put(`http://localhost:8080/api/contests/${contest}`, { description: state.edit.buffer })
+            .then(() => {
+                dispatch(fetchContestInfo(contest) as any);
+                resolve();
+            })
+            .catch(reject);
+    });
+};
+export const updateContestExplanation = (contest: string) => (dispatch: DispatchType, getState: () => StateType) => {
+    return new Promise((resolve, reject) => {
+        let state = getState();
+        axios.put(`http://localhost:8080/api/contests/${contest}/explanation`, { explanation: state.edit.buffer })
+            .then(() => {
+                dispatch(fetchContestInfo(contest) as any);
+                resolve();
+            })
+            .catch(reject);
+    });
+};
 
 export interface TaskListRow {
     title: string,
