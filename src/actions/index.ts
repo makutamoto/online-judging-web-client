@@ -271,6 +271,17 @@ export const fetchTaskData = (contest: string, task: number) => (dispatch: Dispa
         .catch(reject);
     });
 };
+export const updateTaskData = (contest: string, task: number) => (dispatch: DispatchType, getState: () => StateType) => {
+    return new Promise((resolve, reject) => {
+        let state = getState();
+        axios.put(`http://localhost:8080/api/contests/${contest}/tasks/${task}`, { problem: state.edit.buffer })
+            .then(() => {
+                dispatch(fetchTaskData(contest, task) as any);
+                resolve();
+            })
+            .catch(reject);
+    });
+};
 
 export interface ResultData {
     whole_result: number,

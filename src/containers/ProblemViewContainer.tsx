@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { StateType } from '../reducers';
 import { DispatchType } from '..';
-import { TaskData, TaskListRow, fetchTaskData } from '../actions';
+import { TaskData, TaskListRow, setEditBuffer, setEditCallback, updateTaskData, fetchTaskData } from '../actions';
 import Markdown from '../components/Markdown';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +24,7 @@ interface ProblemViewContainerProps {
     tasks: TaskListRow[] | null,
     info: TaskData | null,
     onUpdate: (contest: string, task: number) => void,
+    onChange: (newValue: string) => void,
     contest: string,
     task: number,
     edit: boolean,
@@ -42,7 +43,7 @@ function ProblemViewContainer(props: ProblemViewContainerProps) {
             <Typography className={classes.title} variant="h4">{title}</Typography>
             <Divider />
             <Typography className={classes.limit} variant="h6">実行時間制限: {timeLimit! / 1000} sec</Typography>
-            <Markdown value={problem!} edit={props.edit} />
+            <Markdown value={problem!} edit={props.edit} onChange={props.onChange} />
         </Box>
     );
 }
@@ -54,7 +55,11 @@ const mapStateToProps = (state: StateType) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchType) => ({
-    onUpdate: (contest: string, task: number) => dispatch(fetchTaskData(contest, task) as any),
+    onUpdate: (contest: string, task: number) => {
+        dispatch(fetchTaskData(contest, task) as any);
+        dispatch(setEditCallback(() => dispatch(updateTaskData(contest, task) as any)));
+    },
+    onChange: (val: string) => dispatch(setEditBuffer(val)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProblemViewContainer);
